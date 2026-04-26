@@ -15,9 +15,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* Silence the warning and set the alias */
-    "ignoreDeprecations": "5.0",
-    "baseUrl": ".",
+    /* THE MODERN WAY: No baseUrl needed */
     "paths": {
       "@/*": ["./src/*"]
     },
