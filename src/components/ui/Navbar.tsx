@@ -7,7 +7,7 @@ export default function Navbar() {
     <nav className="grid grid-cols-2 md:grid-cols-3 items-center p-4 bg-background border-b text-foreground shadow-sm transition-colors">
       
       {/* 1. Logo (Left) */}
-      <div className="font-bold text-xl">Personal Hub</div>
+      <div className="font-bold text-xl">Pro Club</div>
 
       {/* 2. Links (Center) - visible on desktop only */}
       <div className="hidden md:flex justify-center gap-6">
