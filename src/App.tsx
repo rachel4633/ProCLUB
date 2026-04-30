@@ -4,6 +4,7 @@ import Signup from './components/ui/Signup'
 import Signin from "./components/ui/Signin";
 import Schedule from './components/ui/Schedule';
 import About from "./components/ui/About";
+import Profile from "./components/ui/Profile";
 import WeeklyReview from "./components/ui/Weekly-review";
 import ProtectedRoute from "./components/ui/ProtectedRoute";
 import { ThemeProvider } from "./components/ui/theme-provider"
@@ -26,8 +27,12 @@ function App() {
                 <ProtectedRoute>
                   <Schedule />
                 </ProtectedRoute>
-            } />
-
+                } />
+               <Route path="/profile" element={
+                 <ProtectedRoute>
+                  <Profile />
+                 </ProtectedRoute>
+                } />
             {/* Add more routes here as you create more pages */}
           </Routes>
         </main>

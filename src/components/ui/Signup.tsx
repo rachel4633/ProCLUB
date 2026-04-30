@@ -10,6 +10,8 @@ const Signup = () => {
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const [number,setNumber] = useState("");
+    const [github, setGithub] = useState("");
+// optional github username memory box
     // console.log(username)
 
     // Define the three state of application will move to
@@ -33,6 +35,7 @@ const Signup = () => {
             formdata.append("email", email);
             formdata.append("password", password);
             formdata.append("phone", number);
+            formdata.append("github", github) //pack github into the envelope
 
             // By use of Axois, we can access the method (POST)
             // here we specify to our delivery guy axios.post the servers address
@@ -49,6 +52,11 @@ const Signup = () => {
             setEmail("");
             setPassword("");
             setNumber("");
+            setGithub("");
+            //save github to localStorage if provided
+            if (github){
+                localStorage.setItem('github_username', github)
+            }
 
             setTimeout(() => {
     setSuccess("");
@@ -68,7 +76,7 @@ return (
     // here we use div tags to group everything into groupd so we can apply the styles bla bla bla
     <div className='signup-container'> 
         <div className="signup-card">
-            <h1 className='text-warning'>Join the Pro Club</h1>
+            <h1>Join the Pro Club</h1>
             
             {/* this is the communication center  */}
             <h5>{loading}</h5> 
@@ -111,6 +119,22 @@ return (
             value={number}
             onChange={(e) => setNumber(e.target.value)}
             required/> <br />
+
+            <input type="text"
+            placeholder='🐙 GitHub username (optional)'
+            className='form-input'
+            value={github}
+            onChange={(e) => setGithub(e.target.value)}
+             /> <br />
+
+   <a href="https://github.com/signup"
+    target="_blank"
+    rel="noreferrer"
+    className='link'
+    style={{ fontSize: '12px' }}
+>
+    Don't have GitHub? Create one here →
+</a> <br /><br />
 
             {/* <p className='text-light'>{number} <br /></p> */}
 

@@ -28,9 +28,14 @@ const Signin = () => {
 
             if (response.data.user) {
                 localStorage.setItem("user", JSON.stringify(response.data.user));
-                 setSuccess("Login Successful. Welcome! 🎉");
-                setTimeout(()=> navigate("/") , 2000);
-            } else {
+    // save github username if it exists in the response
+                if (response.data.user.github) {
+                    localStorage.setItem('github_username', response.data.user.github);
+                }
+                setSuccess("Login Successful. Welcome! 🎉");
+                setTimeout(() => navigate("/"), 2000);
+             }
+             else {
                 setError("Login failed. Please try again!");
             }
         } catch (error) {

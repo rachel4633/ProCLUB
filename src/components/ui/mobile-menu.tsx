@@ -15,8 +15,9 @@ import {
 const navLinks = [
   { name: "Today's Schedule", href: "/" },
   { name: "Weekly Review", href: "/weekly-review" },
-  { name: "About", href: "/about" },        // ✅ Add this
-  { name: "Login", href: "/signin" },        // ✅ Add this
+  { name: "Profile", href: "/profile" },
+  { name: "About", href: "/about" },       
+  { name: "Login", href: "/signin" },         
   { name: "Sign Up", href: "/signup" }, 
 
 ]

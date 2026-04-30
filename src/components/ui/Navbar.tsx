@@ -1,5 +1,6 @@
 import { MobileMenu } from "./mobile-menu"
 import { ModeToggle } from "./mode-toggle"
+import { User } from 'lucide-react'; 
 import { Link, useNavigate } from "react-router-dom";
 // combined the two imports into one line — they both come from the same place
 
@@ -34,6 +35,11 @@ export default function Navbar() {
         {/* Dark Mode Toggle - visible on all screens */}
         <ModeToggle />
 
+         {user && (
+           <Link to="/profile" className="p-2 rounded-md hover:bg-muted transition">
+             <User className="h-5 w-5 text-foreground" />
+           </Link>
+          )}
         {/* Desktop Auth Buttons - hidden on mobile */}
         <div className="hidden sm:flex gap-4 items-center">
           {user ? (
