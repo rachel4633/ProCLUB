@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-interface Block {
+interface Block { // the rules or guidelines or even a checklist which should be ticked
   time: string;
   title: string;  //This part acts as the blue print listing the type,desc etc of everything in the schedule
   desc: string;
@@ -96,7 +96,8 @@ const isCurrentBlock = (block: Block) => {
   const endMinutes = block.endHour * 60 + block.endMinute;       // e.g 11:00 = 660 minutes
   return currentMinutes >= startMinutes && currentMinutes < endMinutes;
   // returns true if now is between start and end — like checking if you are inside a building
-};
+};//this is the math machine it looks at the clock on your walls turns the time into min and checks if that
+//number fits inside that start and end times of a task
 
 const Schedule = () => {
   const [done, setDone] = useState<string[]>([]);

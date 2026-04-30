@@ -12,8 +12,8 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
-        name: 'Personal Hub',
-        short_name: 'PersonalHub',
+        name: 'Pro Club',
+        short_name: 'ProClub',
         description: 'My personal productivity and fitness hub',
         theme_color: '#0a0a0a',
         background_color: '#0a0a0a',

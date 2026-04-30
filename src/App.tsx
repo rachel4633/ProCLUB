@@ -5,6 +5,7 @@ import Signin from "./components/ui/Signin";
 import Schedule from './components/ui/Schedule';
 import About from "./components/ui/About";
 import WeeklyReview from "./components/ui/Weekly-review";
+import ProtectedRoute from "./components/ui/ProtectedRoute";
 import { ThemeProvider } from "./components/ui/theme-provider"
 
 function App() {
@@ -21,6 +22,12 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/" element={<Schedule />} />
               <Route path="/weekly-review" element={<WeeklyReview />} />
+              <Route path="/" element={
+                <ProtectedRoute>
+                  <Schedule />
+                </ProtectedRoute>
+            } />
+
             {/* Add more routes here as you create more pages */}
           </Routes>
         </main>
