@@ -6,6 +6,17 @@ const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 // total blocks per day from your schedule
 const TOTAL_PER_DAY = 11;
 
+// this calculates which week of the year we are in
+// week 1, week 2, week 3 etc
+// when the number changes we know a new week has started
+const getWeekNumber = () => {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 1);
+  const diff = now.getTime() - start.getTime();
+  const oneWeek = 1000 * 60 * 60 * 24 * 7;
+  return Math.floor(diff / oneWeek);
+};
+
 const Profile = () => {
   const [githubUsername, setGithubUsername] = useState('');
   const [editingGithub, setEditingGithub] = useState(false);
@@ -17,31 +28,32 @@ const Profile = () => {
   const user = userRaw ? JSON.parse(userRaw) : null;
 
   useEffect(() => {
-    // load github username from localStorage
+    // 1. load github username from localStorage
     const savedGithub = localStorage.getItem('github_username');
     if (savedGithub) setGithubUsername(savedGithub);
 
-    // load weekly progress data
-    // we check localStorage for each day's completed blocks
+    // 2. check if we are in a new week and reset if so
+    const currentWeek = getWeekNumber();
+    const savedWeek = localStorage.getItem('saved_week');
+
+    if (savedWeek !== String(currentWeek)) {
+      // new week detected — wipe all 7 days and start fresh
+      DAYS.forEach((_, i) => {
+        localStorage.setItem(`weekly_progress_day_${i}`, '0');
+      });
+      localStorage.setItem('saved_week', String(currentWeek));
+    }
+
+    // 3. LOAD WEEKLY PROGRESS DATA (This was the missing part!)
     const data = DAYS.map((_, i) => {
       const saved = localStorage.getItem(`weekly_progress_day_${i}`);
       return saved ? parseInt(saved) : 0;
     });
+
+    // 4. Update the state so the bars actually show up
     setWeeklyData(data);
 
-    // save today's progress automatically
-    const today = new Date().getDay();
-    // getDay() returns 0=Sunday 1=Monday etc
-    // we convert to Mon=0 format
-    const dayIndex = today === 0 ? 6 : today - 1;
-    const todayDone = JSON.parse(localStorage.getItem('schedule_done') || '[]');
-    localStorage.setItem(`weekly_progress_day_${dayIndex}`, String(todayDone.length));
-
-    // update the chart with today's data
-    const updated = [...data];
-    updated[dayIndex] = todayDone.length;
-    setWeeklyData(updated);
-  }, []);
+  }, []); // <--- This closing brace was missing or misplaced in your code
 
   const saveGithub = () => {
     localStorage.setItem('github_username', tempGithub);
