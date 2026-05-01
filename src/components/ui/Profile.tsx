@@ -90,7 +90,6 @@ const Profile = () => {
         id="profile-pic-upload"
         type="file"
         accept="image/*"
-        capture="environment"
         className="hidden"
         onChange={async (e) => {
           if (e.target.files && e.target.files[0]) {
