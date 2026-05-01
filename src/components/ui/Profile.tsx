@@ -58,35 +58,84 @@ const Profile = () => {
     <div className="w-full px-4 py-8 max-w-3xl mx-auto">
 
       {/* Profile header */}
-      <div className="rounded-xl bg-secondary border-l-4 border-l-blue-600 p-6 mb-6">
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl font-bold">
-            {user?.profile_pic && user.profile_pic !== 'default_avatar.png' ? (
-              // if user has a real profile pic show it
-             <img
-               src={`https://godchild.alwaysdata.net/static/profile_pics/${user.profile_pic}`}
-               alt="profile"
-               className="w-full h-full object-cover"
-             />
-              ) : (
-              // if no pic show first letter of username
-              user?.username?.charAt(0).toUpperCase() || '?'
-              )}
-               </div>
-              <div>
-                <h2 className="text-xl font-medium text-foreground">{user?.username || 'User'}</h2>
-              <p className="text-sm text-muted-foreground">{user?.email || ''}</p>
-              {/* show github username if it exists */}
-               {user?.github_username && (
-                 <p className="text-xs text-muted-foreground">🐙 {user.github_username}</p>
-                  )}
-                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-medium mt-1 inline-block">
-                    Pro Club Member
-                  </span>
-                </div>
-                        </div>
+ <div className="rounded-xl bg-secondary border-l-4 border-l-blue-600 p-6 mb-6">
+  <div className="flex items-center gap-4">
+    
+    {/* Avatar with camera button */}
+    <div className="relative">
+      <div className="w-14 h-14 rounded-full overflow-hidden bg-blue-600 flex items-center justify-center text-white text-2xl font-bold">
+        {user?.profile_pic && user.profile_pic !== 'default_avatar.png' ? (
+          <img
+            src={`https://godchild.alwaysdata.net/static/profile_pics/${user.profile_pic}`}
+            alt="profile"
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          user?.username?.charAt(0).toUpperCase() || '?'
+        )}
       </div>
 
+      {/* Camera button on top of avatar */}
+      <label
+        htmlFor="profile-pic-upload"
+        className="absolute bottom-0 right-0 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-700 transition-colors"
+        title="Change profile picture"
+      >
+        {/* camera emoji as icon */}
+        <span style={{ fontSize: '12px' }}>📷</span>
+      </label>
+
+      {/* hidden file input — triggered by the camera button */}
+      <input
+        id="profile-pic-upload"
+        type="file"
+        accept="image/*"
+        capture="environment"
+        className="hidden"
+        onChange={async (e) => {
+          if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+
+            // build form data and send to API
+            const formdata = new FormData();
+            formdata.append("profile_pic", file);
+            formdata.append("email", user?.email);
+            // we send email so the API knows which user to update
+
+            try {
+              const response = await fetch(
+                "https://godchild.alwaysdata.net/api/update_profile_pic",
+                { method: "POST", body: formdata }
+              );
+              const data = await response.json();
+
+              if (data.status === "success") {
+                // update localStorage with new profile pic
+                const updatedUser = { ...user, profile_pic: data.filename };
+                localStorage.setItem("user", JSON.stringify(updatedUser));
+                // force page to reload so new pic shows
+                window.location.reload();
+              }
+            } catch (err) {
+              console.error("Upload failed", err);
+            }
+          }
+        }}
+      />
+    </div>
+
+    <div>
+      <h2 className="text-xl font-medium text-foreground">{user?.username || 'User'}</h2>
+      <p className="text-sm text-muted-foreground">{user?.email || ''}</p>
+      {user?.github_username && (
+        <p className="text-xs text-muted-foreground">🐙 {user.github_username}</p>
+      )}
+      <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-medium mt-1 inline-block">
+        Pro Club Member
+      </span>
+    </div>
+  </div>
+</div>
       {/* Stats row */}
       <div className="grid grid-cols-3 gap-3 mb-6">
         <div className="rounded-xl bg-secondary p-4 text-center">
