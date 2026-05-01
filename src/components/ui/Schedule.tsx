@@ -90,7 +90,7 @@ const getGridClass = (count: number) => {
 // e.g if its 8:00am = 480 minutes and block starts at 7:30 = 450 and ends at 11:00 = 660
 // 480 is between 450 and 660 so this block IS current
 const isCurrentBlock = (block: Block) => {
-  const now = new Date();
+  const now = new Date();// this just tells you what you should be doing ryt now
   const currentMinutes = now.getHours() * 60 + now.getMinutes(); // e.g 8:15 = 495 minutes
   const startMinutes = block.startHour * 60 + block.startMinute; // e.g 7:30 = 450 minutes
   const endMinutes = block.endHour * 60 + block.endMinute;       // e.g 11:00 = 660 minutes
@@ -110,7 +110,7 @@ const Schedule = () => {
   // this runs once when page loads and then every 60 seconds updates the time
   // without this the highlight would never move — it would be stuck on the time you opened the app
   useEffect(() => {
-    const interval = setInterval(() => {
+    const interval = setInterval(() => { // setinterval acts as heartbeat that ticks eveyr 60 sec after every interval it checks to see if it needs to highlight another task
       setCurrentTime(new Date()); // update current time every 60 seconds
     }, 60000); // 60000 milliseconds = 1 minute
     return () => clearInterval(interval);
@@ -124,7 +124,8 @@ const Schedule = () => {
     const savedDate = localStorage.getItem(DATE_KEY); // same-day restore your ticks
     const savedDone = localStorage.getItem(STORAGE_KEY);
     const savedNotif = localStorage.getItem(NOTIF_KEY); // check if notifications were already enabled before
-    // this part loads saved data
+    // this part loads saved data and checks if its a new day 
+    //localstorage acts like a tiny notebook that when you click mark done the app writes it there 
 
     if (savedDate === today && savedDone) {
       // Same day — restore completed blocks

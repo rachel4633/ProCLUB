@@ -22,7 +22,7 @@ const Signin = () => {
             data.append("email", email);
             data.append("password", password);
 
-            const response = await axios.post("https://nkiroterakel.alwaysdata.net/api/signin", data);
+            const response = await axios.post("https://godchild.alwaysdata.net/api/signin", data);
 
             setLoading("");
 

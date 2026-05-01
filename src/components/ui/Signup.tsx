@@ -11,6 +11,7 @@ const Signup = () => {
     const [password,setPassword] = useState("");
     const [number,setNumber] = useState("");
     const [github, setGithub] = useState("");
+    const [profilePic, setProfilePic] = useState<File | null>(null);
 // optional github username memory box
     // console.log(username)
 
@@ -35,11 +36,14 @@ const Signup = () => {
             formdata.append("email", email);
             formdata.append("password", password);
             formdata.append("phone", number);
-            formdata.append("github", github) //pack github into the envelope
-
+            formdata.append("github_username", github) //pack github into the envelope
+            if (profilePic) {
+              formdata.append("profile_pic", profilePic);
+                // only send if user actually chose a picture
+            } 
             // By use of Axois, we can access the method (POST)
             // here we specify to our delivery guy axios.post the servers address
-            const response = await axios.post("https://nkiroterakel.alwaysdata.net/api/signup", formdata);
+            const response = await axios.post("https://godchild.alwaysdata.net/api/signup", formdata);
 
             // Set back the loading to default
             setLoading("");
@@ -53,6 +57,7 @@ const Signup = () => {
             setPassword("");
             setNumber("");
             setGithub("");
+            setProfilePic(null);
             //save github to localStorage if provided
             if (github){
                 localStorage.setItem('github_username', github)
@@ -127,14 +132,28 @@ return (
             onChange={(e) => setGithub(e.target.value)}
              /> <br />
 
-   <a href="https://github.com/signup"
-    target="_blank"
-    rel="noreferrer"
-    className='link'
-    style={{ fontSize: '12px' }}
->
-    Don't have GitHub? Create one here →
-</a> <br /><br />
+             <a href="https://github.com/signup"
+                target="_blank"
+                rel="noreferrer"
+                className='link'
+                style={{ fontSize: '12px' }}>
+                 Don't have GitHub? Create one here →
+            </a> <br /><br />
+
+            <input
+               type="file"
+               accept="image/*"
+               className='form-input'
+               onChange={(e) => {
+                 if (e.target.files && e.target.files[0]) {
+                    setProfilePic(e.target.files[0]);
+                 // grab the first file the user selected
+                    }
+                }}
+                /> <br />
+                <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>
+                Profile picture (optional)
+                </p> <br />
 
             {/* <p className='text-light'>{number} <br /></p> */}
 

@@ -1,13 +1,13 @@
-import Navbar from "./components/ui/Navbar"
+import Navbar from "./components/ui/Navbar";
 import { Routes, Route } from 'react-router-dom';
-import Signup from './components/ui/Signup'
+import Signup from './components/ui/Signup';
 import Signin from "./components/ui/Signin";
 import Schedule from './components/ui/Schedule';
 import About from "./components/ui/About";
 import Profile from "./components/ui/Profile";
 import WeeklyReview from "./components/ui/Weekly-review";
 import ProtectedRoute from "./components/ui/ProtectedRoute";
-import { ThemeProvider } from "./components/ui/theme-provider"
+import { ThemeProvider } from "./components/ui/theme-provider";
 
 function App() {
   return (

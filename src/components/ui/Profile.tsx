@@ -61,17 +61,30 @@ const Profile = () => {
       <div className="rounded-xl bg-secondary border-l-4 border-l-blue-600 p-6 mb-6">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl font-bold">
-            {user?.username?.charAt(0).toUpperCase() || '?'}
-            {/* charAt(0) grabs the first letter of the username for the avatar */}
-          </div>
-          <div>
-            <h2 className="text-xl font-medium text-foreground">{user?.username || 'User'}</h2>
-            <p className="text-sm text-muted-foreground">{user?.email || ''}</p>
-            <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-medium mt-1 inline-block">
-              Pro Club Member
-            </span>
-          </div>
-        </div>
+            {user?.profile_pic && user.profile_pic !== 'default_avatar.png' ? (
+              // if user has a real profile pic show it
+             <img
+               src={`https://godchild.alwaysdata.net/static/profile_pics/${user.profile_pic}`}
+               alt="profile"
+               className="w-full h-full object-cover"
+             />
+              ) : (
+              // if no pic show first letter of username
+              user?.username?.charAt(0).toUpperCase() || '?'
+              )}
+               </div>
+              <div>
+                <h2 className="text-xl font-medium text-foreground">{user?.username || 'User'}</h2>
+              <p className="text-sm text-muted-foreground">{user?.email || ''}</p>
+              {/* show github username if it exists */}
+               {user?.github_username && (
+                 <p className="text-xs text-muted-foreground">🐙 {user.github_username}</p>
+                  )}
+                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-medium mt-1 inline-block">
+                    Pro Club Member
+                  </span>
+                </div>
+                        </div>
       </div>
 
       {/* Stats row */}
